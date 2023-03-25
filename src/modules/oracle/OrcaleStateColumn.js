@@ -40,6 +40,7 @@ const OrcaleStateColumn = ({ title, oracleData }) => {
   const _onCopyClipboard = () => {
     navigator.clipboard.writeText(reading);
     toast({
+      position: 'top',
       title: 'Copied to clipboard',
       status: 'success',
       duration: 2500,

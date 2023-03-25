@@ -19,6 +19,7 @@ function Home() {
       await logout();
     } catch (err) {
       toast({
+        position: 'top',
         title: 'Error',
         description: err.message,
         status: 'error',

@@ -14,6 +14,7 @@ function Login() {
       await login(values);
     } catch (err) {
       toast({
+        position: 'top',
         title: 'Error',
         description: err.message,
         status: 'error',

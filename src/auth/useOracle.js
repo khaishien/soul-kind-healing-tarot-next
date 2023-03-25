@@ -22,6 +22,7 @@ const useOracle = () => {
       .catch((error) => {
         setData([]);
         toast({
+          position: 'top',
           title: 'Error',
           description: error.message,
           status: 'error',

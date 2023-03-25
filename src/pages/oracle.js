@@ -4,6 +4,8 @@ import { Flex, Text, SimpleGrid } from '@chakra-ui/react';
 import styles from '@/styles/Home.module.css';
 import useOracle from '@/auth/useOracle';
 import OrcaleStateColumn from '@/modules/oracle/OrcaleStateColumn';
+import OrcaleTemplator from '@/modules/oracle/OrcaleTemplator';
+import OracleSection from '@/modules/oracle/OrcaleSection';
 
 function Oracle() {
   const { oracleData } = useOracle();
@@ -20,18 +22,45 @@ function Oracle() {
           justify='flex-start'
         >
           <Text fontSize='2xl'>Oracle</Text>
-          <SimpleGrid
-            spacing='12'
-            w={'100%'}
-            justify='center'
-            columns={{ sm: 1, md: 3 }}
-          >
-            <OrcaleStateColumn title={'Past'} oracleData={oracleData} />
+          <OracleSection
+            sections={[
+              {
+                title: 'Selector',
+                content: (
+                  <SimpleGrid
+                    spacing='12'
+                    w={'100%'}
+                    justify='center'
+                    columns={{ sm: 1, md: 3 }}
+                  >
+                    <OrcaleStateColumn title={'Past'} oracleData={oracleData} />
 
-            <OrcaleStateColumn title={'Present'} oracleData={oracleData} />
+                    <OrcaleStateColumn
+                      title={'Present'}
+                      oracleData={oracleData}
+                    />
 
-            <OrcaleStateColumn title={'Future'} oracleData={oracleData} />
-          </SimpleGrid>
+                    <OrcaleStateColumn
+                      title={'Future'}
+                      oracleData={oracleData}
+                    />
+                  </SimpleGrid>
+                )
+              },
+              {
+                title: 'Templator',
+                content: (
+                  <OrcaleTemplator
+                    reading={{
+                      past: '12313h4jh1 j3h4h13h4j h1jh34j hj1h34jk hj1h34jk hj1h34jkh k1jh34jh j1h34jhj1kh34kjh1kjh34kjh1kj3h4kjh13h4jkj1h34kjh1kj3h',
+                      present: '456',
+                      future: '789'
+                    }}
+                  />
+                )
+              }
+            ]}
+          />
         </Flex>
       </main>
     </>
