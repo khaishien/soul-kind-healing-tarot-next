@@ -2,25 +2,11 @@ import { Card, CardBody, Heading, Image, Stack, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Rnd } from 'react-rnd';
 
-const SKResizeCard = ({ data, color, onClick, isSelected }) => {
+const SKResizeCard = ({ data, onClick, isSelected }) => {
   const [width, setWidth] = useState(150);
   const [height, setHeight] = useState(150);
   const [x, setX] = useState(10);
   const [y, setY] = useState(10);
-
-  //   const _setX = (val) => {
-  //     if (val >= 0 && val + width <= max) {
-  //       setX(val);
-  //     }
-  //   };
-  //   const _setY = (val) => {
-  //     if (val >= 0 && val + height <= max) {
-  //       console.log('##val', val);
-  //       console.log('##height', height);
-  //       console.log('##max', max);
-  //       setY(val);
-  //     }
-  //   };
 
   const _renderContent = () => {
     switch (data.type) {
@@ -36,8 +22,25 @@ const SKResizeCard = ({ data, color, onClick, isSelected }) => {
               <Heading size='md' style={{ whiteSpace: 'pre-line' }}>
                 {data.title}
               </Heading>
-              <Text style={{ whiteSpace: 'pre-line' }}>{data.desc}</Text>
+              {data.desc?.length > 0 && (
+                <Text style={{ whiteSpace: 'pre-line' }}>{data.desc}</Text>
+              )}
             </Stack>
+          </CardBody>
+        );
+      case 'PAST_IMAGE':
+      case 'PRESENT_IMAGE':
+      case 'FUTURE_IMAGE':
+        return (
+          <CardBody p={0}>
+            <Image
+              borderRadius={10}
+              style={{ pointerEvents: 'none' }}
+              alt={data.type}
+              boxSize='100%'
+              objectFit='cover'
+              src={data.image}
+            />
           </CardBody>
         );
       case 'IMAGE':
@@ -75,7 +78,7 @@ const SKResizeCard = ({ data, color, onClick, isSelected }) => {
       }}
     >
       <Card
-        bg={color}
+        backgroundColor={data?.color}
         borderWidth={isSelected ? 2 : 0}
         borderColor={isSelected ? 'red' : null}
       >

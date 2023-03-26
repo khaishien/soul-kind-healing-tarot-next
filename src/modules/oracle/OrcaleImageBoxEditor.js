@@ -1,13 +1,17 @@
-import { Button, Heading, Stack } from '@chakra-ui/react';
+import { Button, Stack, Text } from '@chakra-ui/react';
 
 const OrcaleImageBoxEditor = ({ data, onCancel, onDelete, onMoveTop }) => {
   return (
     <Stack>
-      <Heading>{data?.type}</Heading>
+      <Text as='b' fontSize={'xl'}>
+        {data?.type}
+      </Text>
       <Stack>
-        <Button colorScheme={'red'} onClick={() => onDelete()}>
-          Delete
-        </Button>
+        {data?.type === 'IMAGE' && (
+          <Button colorScheme={'red'} onClick={() => onDelete()}>
+            Delete
+          </Button>
+        )}
         <Button variant='outline' onClick={() => onCancel()}>
           Cancel
         </Button>

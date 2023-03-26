@@ -30,7 +30,7 @@ const OrcaleTemplator = ({ reading }) => {
 
   const { past, present, future } = reading;
 
-  const max = 1024;
+  const max = 960;
 
   const [width, setWidth] = useState(max);
   const [height, setHeight] = useState(max);
@@ -43,22 +43,40 @@ const OrcaleTemplator = ({ reading }) => {
       id: _.now(),
       type: 'PAST',
       title: 'Past',
-      desc: past,
-      color: 'gray.600'
+      desc: past.desc,
+      color: '#4A5568'
+    },
+    {
+      id: _.now(),
+      type: 'PAST_IMAGE',
+      image: `/card/${past.id}.jpg`,
+      color: '#4A5568'
     },
     {
       id: _.now(),
       type: 'PRESENT',
       title: 'Present',
-      desc: present,
-      color: 'teal.400'
+      desc: present.desc,
+      color: '#38B2AC'
+    },
+    {
+      id: _.now(),
+      type: 'PRESENT_IMAGE',
+      image: `/card/${present.id}.jpg`,
+      color: '#4A5568'
     },
     {
       id: _.now(),
       type: 'FUTURE',
       title: 'Future',
-      desc: future,
-      color: 'pink.400'
+      desc: future.desc,
+      color: '#ED64A6'
+    },
+    {
+      id: _.now(),
+      type: 'FUTURE_IMAGE',
+      image: `/card/${future.id}.jpg`,
+      color: '#4A5568'
     }
   ]);
   const _onAddText = () => {
@@ -68,7 +86,7 @@ const OrcaleTemplator = ({ reading }) => {
         type: 'TEXT',
         title: 'title A',
         desc: 'content B',
-        color: 'blue.400'
+        color: '#4299E1'
       })
     );
   };
@@ -82,7 +100,7 @@ const OrcaleTemplator = ({ reading }) => {
         type: 'IMAGE',
         title: 'title A',
         image: imageUrl,
-        color: 'purple.400'
+        color: '#9F7AEA'
       })
     );
   };
@@ -197,6 +215,10 @@ const OrcaleTemplator = ({ reading }) => {
       switch (_box.type) {
         default:
           return null;
+
+        case 'PAST_IMAGE':
+        case 'PRESENT_IMAGE':
+        case 'FUTURE_IMAGE':
         case 'IMAGE':
           return (
             <OrcaleImageBoxEditor
@@ -216,6 +238,7 @@ const OrcaleTemplator = ({ reading }) => {
               onUpdate={(val) => {
                 _box.title = val.title;
                 _box.desc = val.desc;
+                _box.color = val.color;
                 setBoxes([...boxes]);
                 setCurrentSelectedIndex(null);
               }}
@@ -230,7 +253,7 @@ const OrcaleTemplator = ({ reading }) => {
 
   return (
     <Flex flex={1}>
-      <Box pr={10}>
+      <Box pr={4}>
         <Stack>
           {_renderAddButton()}
           <Divider size={'lg'} />
@@ -242,7 +265,7 @@ const OrcaleTemplator = ({ reading }) => {
             Generate Pdf
           </Button>
           <Button
-            colorScheme='red'
+            colorScheme='purple'
             onClick={() => onGenerateImage()}
             isLoading={isGenerateLoading}
           >
@@ -266,8 +289,17 @@ const OrcaleTemplator = ({ reading }) => {
           <Rnd
             id={'orcale'}
             bounds={'parent'}
-            lockAspectRatio={true}
             disableDragging={true}
+            enableResizing={{
+              top: false,
+              right: true,
+              bottom: true,
+              left: false,
+              topRight: false,
+              bottomRight: true,
+              bottomLeft: false,
+              topLEft: false
+            }}
             maxWidth={max}
             maxHeight={max}
             style={{ backgroundColor: 'gray', borderRadius: '10px' }}

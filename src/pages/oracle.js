@@ -52,9 +52,12 @@ function Oracle() {
                 content: (
                   <OrcaleTemplator
                     reading={{
-                      past: '12313h4jh1 j3h4h13h4j h1jh34j hj1h34jk hj1h34jk hj1h34jkh k1jh34jh j1h34jhj1kh34kjh1kjh34kjh1kj3h4kjh13h4jkj1h34kjh1kj3h',
-                      present: '456',
-                      future: '789'
+                      past: {
+                        id: 1,
+                        desc: '12313h4jh1 j3h4h13h4j h1jh34j hj1h34jk hj1h34jk hj1h34jkh k1jh34jh j1h34jhj1kh34kjh1kjh34kjh1kj3h4kjh13h4jkj1h34kjh1kj3h'
+                      },
+                      present: { id: 4, desc: '456' },
+                      future: { id: 53, desc: '789' }
                     }}
                   />
                 )

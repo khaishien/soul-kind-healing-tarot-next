@@ -1,11 +1,5 @@
-import {
-  Button,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  Textarea
-} from '@chakra-ui/react';
+import { SKColorPicker } from '@/components';
+import { Button, Input, Stack, Text, Textarea } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 const OrcaleTextBoxEditor = ({
@@ -17,16 +11,20 @@ const OrcaleTextBoxEditor = ({
 }) => {
   const [_title, setTitle] = useState(data?.title);
   const [_desc, setDesc] = useState(data?.desc);
+  const [_color, setColor] = useState(data?.color);
 
   useEffect(() => {
     if (data) {
       setTitle(data.title);
       setDesc(data.desc);
+      setColor(data.color);
     }
   }, [data]);
   return (
     <Stack>
-      <Heading>{data?.type}</Heading>
+      <Text as='b' fontSize={'xl'}>
+        {data?.type}
+      </Text>
       <Text>Title</Text>
       <Input
         label='Title'
@@ -46,6 +44,9 @@ const OrcaleTextBoxEditor = ({
           setDesc(e.currentTarget.value);
         }}
       />
+      <Text>Color</Text>
+      <SKColorPicker defaultColor={_color} onChange={(val) => setColor(val)} />
+
       <Stack>
         <Button
           colorScheme='teal'
