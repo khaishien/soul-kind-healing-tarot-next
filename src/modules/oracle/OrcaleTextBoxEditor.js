@@ -45,7 +45,12 @@ const OrcaleTextBoxEditor = ({
         }}
       />
       <Text>Color</Text>
-      <SKColorPicker defaultColor={_color} onChange={(val) => setColor(val)} />
+      <SKColorPicker
+        defaultColor={_color}
+        onChange={(val) => {
+          setColor(val);
+        }}
+      />
 
       <Stack pt={4}>
         <Button
@@ -53,7 +58,8 @@ const OrcaleTextBoxEditor = ({
           onClick={() =>
             onUpdate({
               title: _title,
-              desc: _desc
+              desc: _desc,
+              color: _color
             })
           }
         >
@@ -66,7 +72,7 @@ const OrcaleTextBoxEditor = ({
         )}
         <Button variant='outline' onClick={() => onCancel()}>
           Cancel
-        </Button>{' '}
+        </Button>
         <Button colorScheme={'teal'} onClick={() => onMoveTop()}>
           Move Top
         </Button>

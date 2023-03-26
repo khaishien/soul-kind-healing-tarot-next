@@ -5,7 +5,6 @@ import 'react-color-palette/lib/css/styles.css';
 const SKColorPicker = ({ defaultColor, onChange }) => {
   const [color, setColor] = useColor('hex', defaultColor);
   const theme = useTheme();
-  console.log('##theme', theme);
 
   return (
     <Box>
@@ -14,7 +13,7 @@ const SKColorPicker = ({ defaultColor, onChange }) => {
         color={color}
         onChange={(val) => {
           setColor(val);
-          onChange(val);
+          onChange(val.hex);
         }}
         hideHSV
         dark={theme?.config?.initialColorMode === 'dark'}

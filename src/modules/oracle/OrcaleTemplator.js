@@ -47,42 +47,42 @@ const OrcaleTemplator = ({ reading }) => {
         type: 'PAST',
         title: 'Past',
         desc: past.desc,
-        color: '#4A5568'
+        color: '#F7E9CD'
       },
       {
         id: _.now(),
         type: 'PAST_IMAGE',
         position: past.position,
         image: `/card/${past.id}.jpg`,
-        color: '#4A5568'
+        color: '#F7E9CD'
       },
       {
         id: _.now(),
         type: 'PRESENT',
         title: 'Present',
         desc: present.desc,
-        color: '#38B2AC'
+        color: '#CDF7D4'
       },
       {
         id: _.now(),
         type: 'PRESENT_IMAGE',
         position: present.position,
         image: `/card/${present.id}.jpg`,
-        color: '#4A5568'
+        color: '#CDF7D4'
       },
       {
         id: _.now(),
         type: 'FUTURE',
         title: 'Future',
         desc: future.desc,
-        color: '#ED64A6'
+        color: '#CDDBF7'
       },
       {
         id: _.now(),
         type: 'FUTURE_IMAGE',
         position: future.position,
         image: `/card/${future.id}.jpg`,
-        color: '#4A5568'
+        color: '#CDDBF7'
       }
     ];
 
@@ -341,7 +341,7 @@ const OrcaleTemplator = ({ reading }) => {
             }}
             maxWidth={max}
             maxHeight={max}
-            style={{ backgroundColor: 'gray', borderRadius: '10px' }}
+            style={{ backgroundColor: '#F7CDF0', borderRadius: '10px' }}
             onResize={(e, direction, ref) => {
               setHeight(ref.offsetHeight);
               setWidth(ref.offsetWidth);

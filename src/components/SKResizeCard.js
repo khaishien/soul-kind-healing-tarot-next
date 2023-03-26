@@ -18,10 +18,10 @@ const SKResizeCard = ({ data, onClick, isSelected }) => {
       case 'TEXT':
         return (
           <Stack p={5}>
-            <Text fontSize='lg' as='b'>
+            <Text fontSize='lg' as='b' color='black'>
               {data.title}
             </Text>
-            {data.desc?.length > 0 && <Text>{data.desc}</Text>}
+            {data.desc?.length > 0 && <Text color='black'>{data.desc}</Text>}
           </Stack>
         );
       case 'PAST_IMAGE':
