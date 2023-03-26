@@ -6,9 +6,15 @@ import useOracle from '@/auth/useOracle';
 import OrcaleStateColumn from '@/modules/oracle/OrcaleStateColumn';
 import OrcaleTemplator from '@/modules/oracle/OrcaleTemplator';
 import OracleSection from '@/modules/oracle/OrcaleSection';
+import { useState } from 'react';
+import _ from 'lodash';
 
 function Oracle() {
   const { oracleData } = useOracle();
+
+  const [past, setPast] = useState(null);
+  const [present, setPresent] = useState(null);
+  const [future, setFuture] = useState(null);
 
   return (
     <>
@@ -23,7 +29,7 @@ function Oracle() {
         >
           <Text fontSize='2xl'>Oracle</Text>
           <OracleSection
-            sections={[
+            sections={_.compact([
               {
                 title: 'Selector',
                 content: (
@@ -33,36 +39,47 @@ function Oracle() {
                     justify='center'
                     columns={{ sm: 1, md: 3 }}
                   >
-                    <OrcaleStateColumn title={'Past'} oracleData={oracleData} />
+                    <OrcaleStateColumn
+                      title={'Past'}
+                      oracleData={oracleData}
+                      onChange={(val) => {
+                        setPast(val);
+                      }}
+                    />
 
                     <OrcaleStateColumn
                       title={'Present'}
                       oracleData={oracleData}
+                      onChange={(val) => {
+                        setPresent(val);
+                      }}
                     />
 
                     <OrcaleStateColumn
                       title={'Future'}
                       oracleData={oracleData}
+                      onChange={(val) => {
+                        setFuture(val);
+                      }}
                     />
                   </SimpleGrid>
                 )
               },
-              {
-                title: 'Templator',
-                content: (
-                  <OrcaleTemplator
-                    reading={{
-                      past: {
-                        id: 1,
-                        desc: '12313h4jh1 j3h4h13h4j h1jh34j hj1h34jk hj1h34jk hj1h34jkh k1jh34jh j1h34jhj1kh34kjh1kjh34kjh1kj3h4kjh13h4jkj1h34kjh1kj3h'
-                      },
-                      present: { id: 4, desc: '456' },
-                      future: { id: 53, desc: '789' }
-                    }}
-                  />
-                )
-              }
-            ]}
+              past && present && future
+                ? {
+                    title: 'Templator',
+                    content: (
+                      <OrcaleTemplator
+                        reading={{
+                          past,
+                          present,
+                          future
+                        }}
+                      />
+                    )
+                  }
+                : null
+            ])}
           />
         </Flex>
       </main>

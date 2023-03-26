@@ -47,7 +47,7 @@ const OrcaleTextBoxEditor = ({
       <Text>Color</Text>
       <SKColorPicker defaultColor={_color} onChange={(val) => setColor(val)} />
 
-      <Stack>
+      <Stack pt={4}>
         <Button
           colorScheme='teal'
           onClick={() =>

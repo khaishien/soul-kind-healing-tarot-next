@@ -1,6 +1,7 @@
 import useConfirm from '@/hooks/useConfirm';
 import {
   Button,
+  Divider,
   Select,
   Text,
   Textarea,
@@ -9,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-const OrcaleStateColumn = ({ title, oracleData }) => {
+const OrcaleStateColumn = ({ title, oracleData, onChange }) => {
   const confirm = useConfirm();
   const toast = useToast();
   const [stateSelector, setStateSelector] = useState('');
@@ -45,6 +46,14 @@ const OrcaleStateColumn = ({ title, oracleData }) => {
       status: 'success',
       duration: 2500,
       isClosable: false
+    });
+  };
+
+  const _onChange = () => {
+    onChange({
+      id: stateSelector,
+      position: positionSelector,
+      desc: reading
     });
   };
 
@@ -137,6 +146,17 @@ const OrcaleStateColumn = ({ title, oracleData }) => {
       />
       <Button colorScheme='blue' w={'100%'} onClick={_onCopyClipboard}>
         Copy to clipboard
+      </Button>
+
+      <Divider />
+
+      <Button
+        colorScheme='green'
+        w={'100%'}
+        onClick={_onChange}
+        isDisabled={stateSelector == null || reading.length < 1}
+      >
+        Update Templator
       </Button>
     </VStack>
   );

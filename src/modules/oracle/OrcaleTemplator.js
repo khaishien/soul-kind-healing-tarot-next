@@ -17,7 +17,7 @@ import {
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import _ from 'lodash';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import OrcaleImageBoxEditor from './OrcaleImageBoxEditor';
 import OrcaleTextBoxEditor from './OrcaleTextBoxEditor';
@@ -30,55 +30,82 @@ const OrcaleTemplator = ({ reading }) => {
 
   const { past, present, future } = reading;
 
-  const max = 960;
+  const max = 1240;
 
-  const [width, setWidth] = useState(max);
-  const [height, setHeight] = useState(max);
+  const [width, setWidth] = useState(max * 0.7);
+  const [height, setHeight] = useState(max * 0.7);
 
   const [isImageUploaderOpen, setImageUplaoderOpen] = useState(false);
   const [isGenerateLoading, setGenerateLoading] = useState(false);
   const [currentSelectedIndex, setCurrentSelectedIndex] = useState(null);
-  const [boxes, setBoxes] = useState([
-    {
-      id: _.now(),
-      type: 'PAST',
-      title: 'Past',
-      desc: past.desc,
-      color: '#4A5568'
-    },
-    {
-      id: _.now(),
-      type: 'PAST_IMAGE',
-      image: `/card/${past.id}.jpg`,
-      color: '#4A5568'
-    },
-    {
-      id: _.now(),
-      type: 'PRESENT',
-      title: 'Present',
-      desc: present.desc,
-      color: '#38B2AC'
-    },
-    {
-      id: _.now(),
-      type: 'PRESENT_IMAGE',
-      image: `/card/${present.id}.jpg`,
-      color: '#4A5568'
-    },
-    {
-      id: _.now(),
-      type: 'FUTURE',
-      title: 'Future',
-      desc: future.desc,
-      color: '#ED64A6'
-    },
-    {
-      id: _.now(),
-      type: 'FUTURE_IMAGE',
-      image: `/card/${future.id}.jpg`,
-      color: '#4A5568'
-    }
-  ]);
+  const [boxes, setBoxes] = useState([]);
+
+  const _refreshReadingBox = () => {
+    const _arr = [
+      {
+        id: _.now(),
+        type: 'PAST',
+        title: 'Past',
+        desc: past.desc,
+        color: '#4A5568'
+      },
+      {
+        id: _.now(),
+        type: 'PAST_IMAGE',
+        position: past.position,
+        image: `/card/${past.id}.jpg`,
+        color: '#4A5568'
+      },
+      {
+        id: _.now(),
+        type: 'PRESENT',
+        title: 'Present',
+        desc: present.desc,
+        color: '#38B2AC'
+      },
+      {
+        id: _.now(),
+        type: 'PRESENT_IMAGE',
+        position: present.position,
+        image: `/card/${present.id}.jpg`,
+        color: '#4A5568'
+      },
+      {
+        id: _.now(),
+        type: 'FUTURE',
+        title: 'Future',
+        desc: future.desc,
+        color: '#ED64A6'
+      },
+      {
+        id: _.now(),
+        type: 'FUTURE_IMAGE',
+        position: future.position,
+        image: `/card/${future.id}.jpg`,
+        color: '#4A5568'
+      }
+    ];
+
+    const toBeFilterType = [
+      'PAST',
+      'PAST_IMAGE',
+      'PRESENT',
+      'PRESENT_IMAGE',
+      'FUTURE',
+      'FUTURE_IMAGE'
+    ];
+
+    const _others = boxes.filter((box) => {
+      return !toBeFilterType.includes(box.type);
+    });
+
+    setBoxes(_.concat(_arr, _others));
+  };
+
+  useEffect(() => {
+    _refreshReadingBox();
+  }, [reading]);
+
   const _onAddText = () => {
     setBoxes(
       _.concat(boxes, {
@@ -112,7 +139,13 @@ const OrcaleTemplator = ({ reading }) => {
       setCurrentSelectedIndex(null);
       await atLeastOneSec();
       const input = document.getElementById('orcale');
-      html2canvas(input).then((canvas) => {
+      html2canvas(input, {
+        width: width,
+        height: height,
+        scale: 1,
+        x: 0,
+        y: 0
+      }).then((canvas) => {
         var a = document.createElement('a');
 
         a.href = canvas.toDataURL('image/png');
@@ -138,7 +171,13 @@ const OrcaleTemplator = ({ reading }) => {
       setCurrentSelectedIndex(null);
       await atLeastOneSec();
       const input = document.getElementById('orcale');
-      html2canvas(input).then((canvas) => {
+      html2canvas(input, {
+        width: width,
+        height: height,
+        scale: 1,
+        x: 0,
+        y: 0
+      }).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
 
         // const pdf = new jsPDF('p', 'pt', [595.28, 841.89]);
@@ -253,7 +292,7 @@ const OrcaleTemplator = ({ reading }) => {
 
   return (
     <Flex flex={1}>
-      <Box pr={4}>
+      <Box pr={4} minWidth={265}>
         <Stack>
           {_renderAddButton()}
           <Divider size={'lg'} />

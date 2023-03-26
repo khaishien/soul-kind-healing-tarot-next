@@ -1,4 +1,4 @@
-import { Card, CardBody, Heading, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Image, Stack, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Rnd } from 'react-rnd';
 
@@ -17,44 +17,39 @@ const SKResizeCard = ({ data, onClick, isSelected }) => {
       case 'FUTURE':
       case 'TEXT':
         return (
-          <CardBody>
-            <Stack>
-              <Heading size='md' style={{ whiteSpace: 'pre-line' }}>
-                {data.title}
-              </Heading>
-              {data.desc?.length > 0 && (
-                <Text style={{ whiteSpace: 'pre-line' }}>{data.desc}</Text>
-              )}
-            </Stack>
-          </CardBody>
+          <Stack p={5}>
+            <Text fontSize='lg' as='b'>
+              {data.title}
+            </Text>
+            {data.desc?.length > 0 && <Text>{data.desc}</Text>}
+          </Stack>
         );
       case 'PAST_IMAGE':
       case 'PRESENT_IMAGE':
       case 'FUTURE_IMAGE':
         return (
-          <CardBody p={0}>
-            <Image
-              borderRadius={10}
-              style={{ pointerEvents: 'none' }}
-              alt={data.type}
-              boxSize='100%'
-              objectFit='cover'
-              src={data.image}
-            />
-          </CardBody>
+          <Image
+            borderRadius={10}
+            style={{
+              pointerEvents: 'none',
+              transform: `rotate(${data.position === '^' ? '0deg' : '180deg'})`
+            }}
+            alt={data.type}
+            boxSize='100%'
+            objectFit='cover'
+            src={data.image}
+          />
         );
       case 'IMAGE':
         return (
-          <CardBody p={0}>
-            <Image
-              borderRadius={10}
-              style={{ pointerEvents: 'none' }}
-              alt={data.type}
-              boxSize='100%'
-              objectFit='cover'
-              src={URL.createObjectURL(data.image)}
-            />
-          </CardBody>
+          <Image
+            borderRadius={10}
+            style={{ pointerEvents: 'none' }}
+            alt={data.type}
+            boxSize='100%'
+            objectFit='cover'
+            src={URL.createObjectURL(data.image)}
+          />
         );
     }
   };
@@ -77,13 +72,14 @@ const SKResizeCard = ({ data, onClick, isSelected }) => {
         setY(position.y);
       }}
     >
-      <Card
+      <Box
         backgroundColor={data?.color}
+        borderRadius={10}
         borderWidth={isSelected ? 2 : 0}
         borderColor={isSelected ? 'red' : null}
       >
         {_renderContent()}
-      </Card>
+      </Box>
     </Rnd>
   );
 };
